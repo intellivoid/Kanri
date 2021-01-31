@@ -3,3 +3,4 @@ tgcrypto
 configparser
 sqlalchemy
 psycopg2-binary
+rich

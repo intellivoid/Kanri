@@ -1,8 +1,14 @@
 from pyrogram import Client
 from configparser import ConfigParser
 import logging
-logging.basicConfig(level=logging.INFO)
-LOGGER = logging.getLogger(__name__)
+from rich.logging import RichHandler
+
+FORMAT = "%(message)s"
+logging.basicConfig(
+    level=logging.INFO, format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
+)
+
+LOGGER = logging.getLogger("rich")
 LOGGER.info("owo starting haruka...")
 
 parser = ConfigParser()
@@ -17,7 +23,7 @@ NOLOAD = botconfig.get("NOLOAD").split()
 NOLOAD = list(map(str, NOLOAD))
 
 
-app = Client("memory", config_file="config.ini")
+app = Client(":memory:", config_file="config.ini")
 
 BotName = ""
 BotUsername = ""
