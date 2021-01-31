@@ -57,5 +57,4 @@ for module_name in ALL_MODULES:
 if __name__ == "__main__":
     app.start()
     LOGGER.info("Haruka started! uwu")
-    LOGGER.info(f"Bot -> [{BotName}]")
     idle()
