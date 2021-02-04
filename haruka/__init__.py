@@ -8,6 +8,8 @@ logging.basicConfig(
     level=logging.INFO, format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
 )
 
+logging.getLogger("pyrogram").setLevel(logging.WARNING)
+
 LOGGER = logging.getLogger("rich")
 LOGGER.info("owo starting haruka...")
 
