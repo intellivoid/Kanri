@@ -1,17 +1,18 @@
 from haruka import app, OWNER_ID, BotID
 from haruka.modules.sql import users_sql as chats_db
 from pyrogram import filters
+from haruka.helpers import custom_filters
 from io import StringIO, BytesIO
 
 
-@app.on_message(filters.user(OWNER_ID) & filters.command("stats", prefixes='/'))
+@app.on_message(filters.user(OWNER_ID) & custom_filters.command("stats", prefixes='/'))
 async def stats_text(_, message):
     stats = "──「 <b>Current stats</b> 」──\n"
     stats += f"-> <code>{chats_db.num_users()}</code> users, across <code>{chats_db.num_chats()}</code> chats"
     await message.reply(stats)
 
 
-@app.on_message(~filters.me & filters.user(OWNER_ID) & filters.command("chats", prefixes='/'))
+@app.on_message(~filters.me & filters.user(OWNER_ID) & custom_filters.command("chats", prefixes='/'))
 async def chat_stats(client, message):
     all_chats = chats_db.get_all_chats() or []
     chatfile = 'List of chats.\n0. Chat name | Chat ID | Members count\n'

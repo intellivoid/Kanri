@@ -7,6 +7,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.raw import functions
 
 from haruka import app, BotUsername
+from haruka.helpers import custom_filters
 from haruka.helpers.misc import paginate_modules
 
 
@@ -23,7 +24,7 @@ async def help_parser(client, chat_id, text, keyboard=None):
         keyboard = InlineKeyboardMarkup(paginate_modules(0, HELPABLE, "help"))
     await client.send_message(chat_id, text, reply_markup=keyboard)
 
-@app.on_message(~filters.me & filters.command('help', prefixes='/'), group=8)
+@app.on_message(~filters.me & custom_filters.command('help', prefixes='/'), group=8)
 async def help_command(client, message):
     if message.chat.type != "private":
         buttons = InlineKeyboardMarkup(

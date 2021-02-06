@@ -2,6 +2,7 @@ from logging import disable
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from haruka import app
+from haruka.helpers import custom_filters
 
 prvt_message = '''
 Hey there! My name is Haruka Aya - I'm here to help you manage your groups!
@@ -16,7 +17,7 @@ grp_message = '''
 Hey there! I'm alive :3
 '''
 
-@app.on_message(~filters.me & filters.command('start', prefixes='/'), group=8)
+@app.on_message(~filters.me & custom_filters.command('start', prefixes='/'), group=8)
 async def start(client, message):
     if message.chat.type != "private":
         await message.reply_text(grp_message)

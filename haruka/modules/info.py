@@ -5,6 +5,7 @@ from pyrogram.types import User, InlineKeyboardMarkup, InlineKeyboardButton, Mes
 from pyrogram.raw import functions
 from pyrogram.errors import PeerIdInvalid
 from haruka import app
+from haruka.helpers import custom_filters
 
 __mod_name__ = "Info"
 
@@ -55,7 +56,7 @@ def LastOnline(user: User):
 def FullName(user: User):
     return user.first_name + " " + user.last_name if user.last_name else user.first_name
 
-@app.on_message(filters.command('info'))
+@app.on_message(custom_filters.command('info'))
 async def whois(client, message):
     cmd = message.command
     if not message.reply_to_message and len(cmd) == 1:
