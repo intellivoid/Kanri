@@ -4,3 +4,4 @@ configparser
 sqlalchemy
 psycopg2-binary
 rich
+plate

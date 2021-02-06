@@ -6,18 +6,9 @@ from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.raw import functions
 
-from haruka import app, BotUsername
+from haruka import app, BotUsername, plate, tmp_lang
 from haruka.helpers import custom_filters
 from haruka.helpers.misc import paginate_modules
-
-
-HELP_STRINGS = f"""
-Hey! My name is **Haruka**. I am a group management bot, here to help you get around and keep the order in your groups!
-I have lots of handy features, such as warning system, a note keeping system, and even predetermined replies on certain keywords.\n
-**Helpful commands:**
-- /start: Starts me! You've probably already used this.
-- /help: Sends this message; I'll tell you more about myself!
-"""
 
 async def help_parser(client, chat_id, text, keyboard=None):
     if not keyboard:
@@ -27,13 +18,12 @@ async def help_parser(client, chat_id, text, keyboard=None):
 @app.on_message(~filters.me & custom_filters.command('help', prefixes='/'), group=8)
 async def help_command(client, message):
     if message.chat.type != "private":
+        username = (await client.get_me()).username
         buttons = InlineKeyboardMarkup(
-            [[InlineKeyboardButton(text="Help",
-                url=f"t.me/{BotUsername}?start=help")]])
-        await message.reply("Contact me in PM to get the list of possible commands.",
-                            reply_markup=buttons)
+            [[InlineKeyboardButton(text=plate("help_button_help", tmp_lang), url=f"t.me/{username}?start=help")]])
+        await message.reply(plate("help_group", tmp_lang), reply_markup=buttons)
     else:
-        await help_parser(client, message.chat.id, HELP_STRINGS)
+        await help_parser(client, message.chat.id, plate("help_main", tmp_lang))
 
 
 async def help_button_callback(_, __, query):
@@ -47,13 +37,13 @@ async def help_button(_client, query):
     back_match = re.match(r"help_back", query.data)
     if mod_match:
         module = mod_match.group(1)
-        text = "This is help for the module **{}**:\n".format(HELPABLE[module].__mod_name__) \
-            + HELPABLE[module].__help__
+        text = plate("help_module", tmp_lang, name=HELPABLE[module].__mod_name__)
+        text += plate(HELPABLE[module].__help__, tmp_lang)
 
         await query.message.edit(text=text,
                                 reply_markup=InlineKeyboardMarkup(
-                                    [[InlineKeyboardButton(text="Back", callback_data="help_back")]]))
+                                    [[InlineKeyboardButton(text=plate("generic_back", tmp_lang), callback_data="help_back")]]))
 
     elif back_match:
-        await query.message.edit(text=HELP_STRINGS,
+        await query.message.edit(text=plate("help_main", tmp_lang),
                     reply_markup=InlineKeyboardMarkup(paginate_modules(0, HELPABLE, "help")))

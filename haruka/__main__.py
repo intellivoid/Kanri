@@ -3,10 +3,6 @@ from haruka import app, LOGGER, BotName
 from haruka.modules import ALL_MODULES
 import importlib
 
-
-
-
-
 IMPORTED = {}
 MIGRATEABLE = []
 HELPABLE = {}

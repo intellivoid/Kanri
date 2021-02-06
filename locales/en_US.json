@@ -1,0 +1,24 @@
+{
+	"generic_unknown_user": "I don't know that User.",
+	"generic_back": "Back",
+
+    "start_group": "Hey there! I'm alive :3", 
+	"start_private": "Hey there! My name is Haruka Aya - I'm here to help you manage your groups!\nClick Help button to find out more about how to use me to my full potential.\n\nJoin [the bot support group](https://t.me/HarukaAyaGroup) ( @HarukaAyaGroup ) if you need any bot support or help.\n\nFollow [Haruka Aya](https://t.me/HarukaAya) ( @HarukaAya ) if you want to keep up with the bot news, bot updates and bot downtime!\n\nMade with love by @RealAkito\n\nWant to add me to your group? [Click here!](t.me/HarukaAyaBot?startgroup=true)\n\n",
+	
+	"help_main": "Hey! My name is **Haruka Aya**. I am a group management bot, here to help you get around and keep the order in your groups!\nI have lots of handy features, such as warning system, a note keeping system, and even predetermined replies on certain keywords.\n\n**Helpful commands:**\n- /start: Starts me! You've probably already used this.\n- /help: Sends this message; I'll tell you more about myself!\n- /help <module name>: PM's you info about the specific module.\n- /lang: Change bot language\n\nAll commands can be used with the following prefixes: `/ !`",
+	"help_group": "Contact me in PM to get the list of possible commands.",
+	"help_module": "This is help for the module **{name}**:\n",
+	"help_button_help": "Help",
+	"help_button_support": "Support Group",
+
+	"info_help": "- /info: get information about the user (can be @username or a reply)",
+	"info_no_bio": "`No bio set up.`",
+	"info_infotext": "**User info**:\nID: `{user_id}`\nFirst Name: {first_name}\nLast Name: {last_name}\nUsername: @{username}\nUser link: [link](tg://user?id={user_id})\nLast Online: {last_online}\n\nI've seen them in `{seen_chats}` chats in total.",
+	"info_status_recently": "Recently",
+	"info_status_within_week": "Within the last week",
+	"info_status_within_month": "Within the last month",
+	"info_status_long_time_ago": "A long time ago :(",
+	"info_status_online": "Currently Online",
+
+    "apples": "No apples | One apple | {count} apples"
+}

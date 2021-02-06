@@ -1,4 +1,5 @@
 from pyrogram import Client
+from plate import Plate
 from configparser import ConfigParser
 import logging
 from rich.logging import RichHandler
@@ -24,12 +25,15 @@ LOAD = list(map(str, LOAD))
 NOLOAD = botconfig.get("NOLOAD").split()
 NOLOAD = list(map(str, NOLOAD))
 
-
+plate = Plate()
 app = Client(":memory:", config_file="config.ini")
 
 BotName = ""
 BotUsername = ""
 BotID = 0
+
+# TODO: move this to the database for per-user translations.
+tmp_lang = "de_DE"
 
 async def get_bot():
     global BotID, BotName, BotUsername

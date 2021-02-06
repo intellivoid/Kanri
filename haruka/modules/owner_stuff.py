@@ -1,4 +1,4 @@
-from haruka import app, OWNER_ID, BotID
+from haruka import app, OWNER_ID, BotID, plate
 from haruka.modules.sql import users_sql as chats_db
 from pyrogram import filters
 from haruka.helpers import custom_filters

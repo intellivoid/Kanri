@@ -1,0 +1,24 @@
+{
+	"generic_unknown_user": "Ich kenne diesen Benutzer nicht.",
+	"generic_back": "Zurück",
+
+    "start_group": "Sie da! Ich lebe :3", 
+	"start_private": "Sie da! Mein Name ist Haruka Aya - ich bin hier, um Ihnen bei der Verwaltung Ihrer Gruppen zu helfen!\nKlicken Sie auf die Schaltfläche Hilfe, um mehr darüber zu erfahren, wie Sie mein volles Potenzial entfalten können.\n\nJoin [the bot support group](https://t.me/HarukaAyaGroup) ( @HarukaAyaGroup ) bei, wenn Sie Hilfe mit dem Bot benötigen.\n\nFolgen Sie [Haruka Aya](https://t.me/HarukaAya) ( @HarukaAya ) wenn Sie über Bot News, Bot Updates und Bot Ausfallzeiten auf dem Laufenden bleiben möchten!\n\nMit Liebe von @RealAkito gemacht\n\nMöchten Sie mich zu Ihrer Gruppe hinzufügen? [Klick heir!](t.me/HarukaAyaBot?startgroup=true)\n\n",
+	
+	"help_main": "Hallo! Ich heiße **Haruka Aya**. Ich bin ein Gruppenverwaltungsbot, hier, um Ihnen zu helfen, sich fortzubewegen und die Ordnung in Ihren Gruppen zu halten!\n\nIch habe viele praktische Funktionen wie ein Warnsystem, ein Notizsystem und sogar vorgegebene Antworten auf bestimmte Schlüsselwörter.\n\n**Hilfreiche Befehle:**\n- /start: Startet mich! Sie haben dies wahrscheinlich bereits verwendet.\n- /help: Sendet diese Nachricht; Ich erzähle dir mehr über mich!\n- /help <Modulname>: PMs, die Sie über das jeweilige Modul informieren.\n- /lang: Bot Sprache ändern\n\nAlle Befehle können mit den folgenden Präfixen verwendet werden: `/ !`",
+	"help_group": "Kontaktieren Sie mich in PM, um die Liste der möglichen Befehle zu erhalten. ",
+	"help_module": "Dies ist Hilfe für das Modul **{name}**:\n",
+	"help_button_help": "Hilfe",
+	"help_button_support": "Support Gruppe",
+
+	"info_help": "- /info: Informationen über den Benutzer erhalten (kann @Benutzername oder eine Antwort sein)",
+	"info_no_bio": "`Kein bio setup.`",
+	"info_infotext": "**Benutzerinformation**:\nID: `{user_id}`\nVorname: {first_name}\nNachname: {last_name}\nBenutzername: @{username}\nBenutzerlink: [link](tg://user?id={user_id})\nZuletzt gesehen: {last_online}\n\nIch habe sie in insgesamt `{seen_chats}` Chats gesehen.",
+	"info_status_recently": "Vor kurzem",
+	"info_status_within_week": "In der letzten Woche",
+	"info_status_within_month": "Innerhalb des letzten Monats",
+	"info_status_long_time_ago": "Vor langer Zeit :(",
+	"info_status_online": "Momentan Online",
+
+    "apples": "No apples | One apple | {count} apples"
+}
