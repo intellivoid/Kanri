@@ -1,5 +1,7 @@
 from pyrogram import Client
 from plate import Plate
+import aiohttp
+import asyncio
 from configparser import ConfigParser
 import logging
 from rich.logging import RichHandler
@@ -26,6 +28,7 @@ NOLOAD = botconfig.get("NOLOAD").split()
 NOLOAD = list(map(str, NOLOAD))
 
 plate = Plate()
+httpsession = aiohttp.ClientSession()
 app = Client(":memory:", config_file="config.ini")
 
 BotName = ""

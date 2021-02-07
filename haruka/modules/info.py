@@ -37,7 +37,7 @@ def LastOnline(user: User):
     elif user.status == 'offline':
         return datetime.fromtimestamp(user.status.date).strftime("%a, %d %b %Y, %H:%M:%S")
 
-@app.on_message(custom_filters.command('info'))
+@app.on_message(~filters.me & custom_filters.command('info'))
 async def whois(client, message):
     cmd = message.command
     if not message.reply_to_message and len(cmd) == 1:

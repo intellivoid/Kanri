@@ -8,7 +8,7 @@ from io import StringIO, BytesIO
 @app.on_message(filters.user(OWNER_ID) & custom_filters.command("stats", prefixes='/'))
 async def stats_text(_, message):
     stats = "──「 <b>Current stats</b> 」──\n"
-    stats += f"-> <code>{chats_db.num_users()}</code> users, across <code>{chats_db.num_chats()}</code> chats"
+    stats += f"-> `{chats_db.num_users()}` users, across `{chats_db.num_chats()}` chats"
     await message.reply(stats)
 
 
@@ -32,8 +32,8 @@ async def chat_stats(client, message):
             caption="Here is the list of chats in my database.")
 
 
-
-@app.on_message(filters.all & filters.group)
+# Group must be -1 otherwise there's problems registering commands
+@app.on_message(filters.all & filters.group, group=-1)
 def log_user(client, message):
     chat = message.chat
     chats_db.update_user(message.from_user.id, message.from_user.username, chat.id,

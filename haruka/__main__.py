@@ -1,5 +1,5 @@
 from pyrogram import idle
-from haruka import app, LOGGER, BotName
+from haruka import app, LOGGER, BotName, httpsession
 from haruka.modules import ALL_MODULES
 import importlib
 
@@ -54,3 +54,4 @@ if __name__ == "__main__":
     app.start()
     LOGGER.info("Haruka started! uwu")
     idle()
+    httpsession.close()

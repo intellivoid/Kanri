@@ -20,5 +20,17 @@
 	"info_status_long_time_ago": "A long time ago :(",
 	"info_status_online": "Currently Online",
 
-    "apples": "No apples | One apple | {count} apples"
+	"android_help": "\n**Device Specific ROM for a device**\n- /evo <device>: Get the latest Evolution X ROM for a device\n- /los <device>: Get the latest LineageOS ROM for a device\n- /bootleggers <device>: Get the latest Bootleggers ROM for a device\n\n**GSI**\n- /phh: Get the latest Phh AOSP GSI!\n**Misc**\n- /magisk: Get latest Magisk releases",
+	"android_cmd_example": "Please type your device **codename**!\nFor example, `/{cmd} tissot`",
+	"android_button_download": "Click here to Download",
+	"android_err_notfound": "Couldn't find any results matching your query.",
+	"android_err_api": "Couldn't reach the API.",
+	"android_los_msgtxt": "**Download:** [{filename}]({url})\n**Build Size:** `{size}`\n**Version:** `{version}`",
+	"android_evo_msgtxt": "**Download:** [{filename}]({url})\n**Build Size:** `{size}`\n**Android Version:** `{version}`\n**Maintainer:** [{maintainer}](https://t.me/{telegram_username})\n**Actively Maintained:** `{maintained}`",
+	"android_phh_msgtxt": "**Phh's latest GSI release(s)**\n",
+	"android_bootleg_msgtxt": "**Device Name:** `{name}`\n**Maintainer:** `{maintainer}`\n**Build Date:** `{date}`\n**Build Size:** `{size}`\n**SourceForge Folder:** [Here]({folderurl})\n{XDA}**Download:** [{filename}]({fileurl})",
+	"android_bootleg_xda": "**XDA Thread:** [Here]({url})\n",
+	"android_magisk_msgtxt": "**Latest Magisk Releases:**\n**Stable**: [{stablezip}]({stablezipurl}) | [{stableapk}]({stableapkurl}) | [{uninstalltxt}]({stableuninstallurl}) | [{changelogtxt}]({stablechangelogurl})\n**Beta**: [{betazip}]({betazipurl}) | [{betaapk}]({betaapkurl}) | [{uninstalltxt}]({betauninstallurl}) | [{changelogtxt}]({betachangelogurl})\n**Canary**: [{canaryzip}]({canaryzipurl}) | [{canaryapk}]({canaryapkurl}) | [{uninstalltxt}]({canaryuninstallurl}) | [{changelogtxt}]({canarychangelogurl})",
+	"android_magisk_uninstaller": "Uninstaller",
+	"android_magisk_changelog": "Changelog"
 }

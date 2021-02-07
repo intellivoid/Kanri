@@ -20,5 +20,17 @@
 	"info_status_long_time_ago": "Vor langer Zeit :(",
 	"info_status_online": "Momentan Online",
 
-    "apples": "No apples | One apple | {count} apples"
+	"android_help": "\n**Gerätespezifisches ROM für ein Gerät**\n- /evo <device>: Holen Sie sich das neueste Evolution X ROM für ein Gerät\n- /los <device>: Holen Sie sich das neueste LineageOS ROM für ein Gerät\n- /bootleggers <device>: Ruft das neueste Bootleggers ROM für ein Gerät ab\n\n**GSI**\n- /phh: Holen Sie sich die neueste Phh AOSP GSI!\n**Sonstiges**\n- /magisk: Holen Sie sich die neuesten Magisk Versionen",
+	"android_cmd_example": "Bitte geben Sie Ihren geräte **codenamen** ein!\nZum Beispiel `/{cmd} Tissot`",
+	"android_button_download": "Klicke hier zum herunterladen",
+	"android_err_notfound": "Es konnten keine Ergebnisse gefunden werden, die Ihrer Anfrage entsprechen.",
+	"android_err_api": "Die API konnte nicht erreicht werden.",
+	"android_los_msgtxt": "**Herunterladen:** [{filename}]({url})\n**Build Größe:** `{size}`\n**Version:** `{version}`",
+	"android_evo_msgtxt": "**Herunterladen:** [{filename}]({url})\n**Build Größe:** `{size}`\n**Android Version:** `{version}`\n**Betreuer:** [{maintainer}](https://t.me/{telegram_username})\n**Aktiv gewartet:** `{maintained}`",
+	"android_phh_msgtxt": "**Phh's latest GSI release(s)**\n",
+	"android_bootleg_msgtxt": "**Device Name:** `{name}`\n**Maintainer:** `{maintainer}`\n**Build Date:** `{date}`\n**Build Size:** `{size}`\n**SourceForge Folder:** [Here]({folderurl})\n{XDA}**Download:** [{filename}]({fileurl})",
+	"android_bootleg_xda": "**XDA Thread:** [Here]({url})\n",
+	"android_magisk_msgtxt": "**Latest Magisk Releases:**\n**Stable**: [{stablezip}]({stablezipurl}) | [{stableapk}]({stableapkurl}) | [{uninstalltxt}]({stableuninstallurl}) | [{changelogtxt}]({stablechangelogurl})\n**Beta**: [{betazip}]({betazipurl}) | [{betaapk}]({betaapkurl}) | [{uninstalltxt}]({betauninstallurl}) | [{changelogtxt}]({betachangelogurl})\n**Canary**: [{canaryzip}]({canaryzipurl}) | [{canaryapk}]({canaryapkurl}) | [{uninstalltxt}]({canaryuninstallurl}) | [{changelogtxt}]({canarychangelogurl})",
+	"android_magisk_uninstaller": "Uninstaller",
+	"android_magisk_changelog": "Changelog"
 }
