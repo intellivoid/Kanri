@@ -1,5 +1,5 @@
                   INTELLIVOID OPEN-SOURCE SOFTWARE LICENSE
-                       Version 1, 11th January 2021
+                       Version 1.0.1, 11th January 2021
 
  Copyright (C) 2017-2021 Intellivoid Technologies. <https://intellivoid.net/>
  Everyone using this license is permitted to copy and distribute verbatim
@@ -23,7 +23,7 @@ modification follow.
 
   0. Definitions.
 
-  "This License" refers to version 1 of the Intellivoid Open-Source Software
+  "This License" refers to version 1.0.1 of the Intellivoid Open-Source Software
 License.
 
   "Copyright" also means copyright-like laws that apply to other kinds of
@@ -37,10 +37,11 @@ License.  Each licensee is addressed as "you".  "Licensees" and
 requiring copyright permission, other than the making of an exact copy.
 The resulting work is called a "modified version" of the earlier work
 or a work "based on" the earlier work. This "modified version" must be
-used only by the service the original, authentic version was meant
-for unless authorization is provided by the service maintainer/owner.
-Also, in the case you modify a work, MUST provide the source code of the
-"modified version", and you're not allowed to use it out of the "contributor"
+intended as a contribution to The Program that it is modifying and doesn't
+give any right to the licensee or contributor to re-purpose said version for
+any user other then the one intended by the Copyright owner.
+Also, in the case you modify a work, you MUST provide the source code of the
+said version, and you're not allowed to use it out of the "contributor"
 relationship you have with the work.
 
   A "covered work" means either the unmodified Program or a work based
@@ -293,7 +294,7 @@ the "copyright" line and a pointer to where the full notice is found.
 
     This program is open-source software: you can maintain and modify it
     it under the terms of the Intellivoid Open-Source Software License as published
-    by Intellivoid, either version 1 of the License, or (at your option) any later
+    by Intellivoid, either version 1.0.1 of the License, or (at your option) any later
     version.
 
     This program is distributed in the hope that it will be useful,
