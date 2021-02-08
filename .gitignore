@@ -127,6 +127,13 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Bot stuff
 config.ini 
 *.session
 *session-journal
+
+# PyCharm
+
+.idea
+.idea/

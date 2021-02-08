@@ -1,48 +1,52 @@
-from haruka import app, OWNER_ID, BotID, plate
+from haruka import OWNER_ID
 from haruka.modules.sql import users_sql as chats_db
-from pyrogram import filters
+from pyrogram import filters, Client
 from haruka.helpers import custom_filters
-from io import StringIO, BytesIO
+from io import BytesIO
 
 
-@app.on_message(filters.user(OWNER_ID) & custom_filters.command("stats", prefixes='/'))
+@Client.on_message(
+    filters.user(OWNER_ID) & custom_filters.command("stats", prefixes='/')
+)
 async def stats_text(_, message):
     stats = "──「 <b>Current stats</b> 」──\n"
     stats += f"-> `{chats_db.num_users()}` users, across `{chats_db.num_chats()}` chats"
     await message.reply(stats)
 
 
-@app.on_message(~filters.me & filters.user(OWNER_ID) & custom_filters.command("chats", prefixes='/'))
+@Client.on_message(
+    ~filters.me & filters.user(OWNER_ID) & custom_filters.command("chats", prefixes='/')
+)
 async def chat_stats(client, message):
     all_chats = chats_db.get_all_chats() or []
-    chatfile = 'List of chats.\n0. Chat name | Chat ID | Members count\n'
-    P = 1
-    for chat in all_chats:
-        curr_chat = await client.get_chat(chat.chat_id)
-        bot_member = await curr_chat.get_member(BotID)
-        chat_members = await client.get_chat_members_count(chat.chat_id)
-        chatfile += "{}. {} | {} | {}\n".format(P, chat.chat_name,
-                                                    chat.chat_id, chat_members)
-        P += 1
-
-    with BytesIO(str.encode(chatfile)) as output:
-        output.name = "chatlist.txt"
+    with BytesIO(b"") as output:
+        output.write(b"List of chats.\n Chat name | Chat ID | Members count\n")
+        for i, chat in enumerate(all_chats):
+            chat_members = await client.get_chat_members_count(chat.chat_id)
+            output.write(
+                "{}. {} | {} | {}\n".format(
+                    i + 1, chat.chat_name, chat.chat_id, chat_members
+                ).encode()
+            )
+        output.name = "chats.txt"
+        output.seek(0)
         await message.reply_document(
-            document=output,
-            caption="Here is the list of chats in my database.")
+            document=output, caption="Here is the list of chats in my database."
+        )
 
 
-# Group must be -1 otherwise there's problems registering commands
-@app.on_message(filters.all & filters.group, group=-1)
-def log_user(client, message):
+@Client.on_message(filters.all & filters.group, group=-1)
+def log_user(_, message):
     chat = message.chat
-    chats_db.update_user(message.from_user.id, message.from_user.username, chat.id,
-                    chat.title)
-
+    chats_db.update_user(
+        message.from_user.id, message.from_user.username, chat.id, chat.title
+    )
     if message.reply_to_message:
-        chats_db.update_user(message.reply_to_message.from_user.id,
-                        message.reply_to_message.from_user.username, chat.id,
-                        chat.title)
-
+        chats_db.update_user(
+            message.reply_to_message.from_user.id,
+            message.reply_to_message.from_user.username,
+            chat.id,
+            chat.title,
+        )
     if message.forward_from:
         chats_db.update_user(message.forward_from.id, message.forward_from.username)
