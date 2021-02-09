@@ -4,7 +4,7 @@ from typing import List
 from pyrogram.filters import create
 from pyrogram.types import Message
 from pyrogram import Client
-from haruka import BotUsername
+from haruka import LOCAL
 
 
 def command(
@@ -29,7 +29,7 @@ def command(
         regex = "^({prefix})+\\b({regex})\\b(\\b@{bot_name}\\b)?(.*)".format(
             prefix='|'.join(re.escape(x) for x in flt.prefixes),
             regex='|'.join(flt.commands),
-            bot_name=BotUsername,
+            bot_name=LOCAL.bot_username,
         )
         matches = re.search(re.compile(regex), text)
         if matches:

@@ -1,12 +1,12 @@
-from haruka import OWNER_ID
-from haruka.modules.sql import users_sql as chats_db
+from haruka import LOCAL
+from haruka.database import users as chats_db
 from pyrogram import filters, Client
 from haruka.helpers import custom_filters
 from io import BytesIO
 
 
 @Client.on_message(
-    filters.user(OWNER_ID) & custom_filters.command("stats", prefixes='/')
+    filters.user(LOCAL.OWNER_ID) & custom_filters.command("stats", prefixes='/') & ~LOCAL.FLOOD_WAITED
 )
 async def stats_text(_, message):
     stats = "──「 <b>Current stats</b> 」──\n"
@@ -15,7 +15,7 @@ async def stats_text(_, message):
 
 
 @Client.on_message(
-    ~filters.me & filters.user(OWNER_ID) & custom_filters.command("chats", prefixes='/')
+    ~filters.me & filters.user(LOCAL.OWNER_ID) & custom_filters.command("chats", prefixes='/') & ~LOCAL.FLOOD_WAITED
 )
 async def chat_stats(client, message):
     all_chats = chats_db.get_all_chats() or []
@@ -35,18 +35,18 @@ async def chat_stats(client, message):
         )
 
 
-@Client.on_message(filters.all & filters.group, group=-1)
-def log_user(_, message):
+@Client.on_message(filters.all & filters.group & ~LOCAL.FLOOD_WAITED, group=-1)
+async def log_user(_, message):
     chat = message.chat
-    chats_db.update_user(
+    await chats_db.update_user(
         message.from_user.id, message.from_user.username, chat.id, chat.title
     )
     if message.reply_to_message:
-        chats_db.update_user(
+        await chats_db.update_user(
             message.reply_to_message.from_user.id,
             message.reply_to_message.from_user.username,
             chat.id,
             chat.title,
         )
     if message.forward_from:
-        chats_db.update_user(message.forward_from.id, message.forward_from.username)
+        await chats_db.update_user(message.forward_from.id, message.forward_from.username)

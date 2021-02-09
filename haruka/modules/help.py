@@ -1,8 +1,7 @@
 import re
-from haruka import HELPABLE  # pylint: disable-msg=E0611
+from haruka import HELPABLE, LOCAL  # pylint: disable-msg=E0611
 from pyrogram import filters, Client
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from haruka import plate, tmp_lang
 from haruka.helpers import custom_filters
 from haruka.helpers.misc import paginate_modules
 
@@ -13,7 +12,7 @@ async def help_parser(client, chat_id, text, keyboard=None):
     await client.send_message(chat_id, text, reply_markup=keyboard)
 
 
-@Client.on_message(~filters.me & custom_filters.command('help', prefixes='/'), group=8)
+@Client.on_message(~filters.me & custom_filters.command('help', prefixes='/') & ~LOCAL.FLOOD_WAITED, group=8)
 async def help_command(client, message):
     if message.chat.type != "private":
         username = (await client.get_me()).username
@@ -21,15 +20,15 @@ async def help_command(client, message):
             [
                 [
                     InlineKeyboardButton(
-                        text=plate("help_button_help", tmp_lang),
+                        text=LOCAL.PLATE("help_button_help", LOCAL.DEFAULT_LANG),
                         url=f"t.me/{username}?start=help",
                     )
                 ]
             ]
         )
-        await message.reply(plate("help_group", tmp_lang), reply_markup=buttons)
+        await message.reply(LOCAL.PLATE("help_group", LOCAL.DEFAULT_LANG), reply_markup=buttons)
     else:
-        await help_parser(client, message.chat.id, plate("help_main", tmp_lang))
+        await help_parser(client, message.chat.id, LOCAL.PLATE("help_main", LOCAL.DEFAULT_LANG))
 
 
 async def help_button_callback(_, __, query):
@@ -37,14 +36,14 @@ async def help_button_callback(_, __, query):
         return True
 
 
-@Client.on_callback_query(filters.create(help_button_callback))
+@Client.on_callback_query(filters.create(help_button_callback) & ~LOCAL.FLOOD_WAITED)
 async def help_button(_client, query):
     mod_match = re.match(r"help_module\((.+?)\)", query.data)
     back_match = re.match(r"help_back", query.data)
     if mod_match:
         module = mod_match.group(1)
-        text = plate("help_module", tmp_lang, name=HELPABLE[module].__mod_name__)
-        text += plate(HELPABLE[module].__help__, tmp_lang)
+        text = LOCAL.PLATE("help_module", LOCAL.DEFAULT_LANG, name=HELPABLE[module].__mod_name__)
+        text += LOCAL.PLATE(HELPABLE[module].__help__, LOCAL.DEFAULT_LANG)
 
         await query.message.edit(
             text=text,
@@ -52,7 +51,7 @@ async def help_button(_client, query):
                 [
                     [
                         InlineKeyboardButton(
-                            text=plate("generic_back", tmp_lang),
+                            text=LOCAL.PLATE("generic_back", LOCAL.DEFAULT_LANG),
                             callback_data="help_back",
                         )
                     ]
@@ -62,6 +61,6 @@ async def help_button(_client, query):
 
     elif back_match:
         await query.message.edit(
-            text=plate("help_main", tmp_lang),
+            text=LOCAL.PLATE("help_main", LOCAL.DEFAULT_LANG),
             reply_markup=InlineKeyboardMarkup(paginate_modules(0, HELPABLE, "help")),
         )
