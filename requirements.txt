@@ -1,9 +1,7 @@
 pyrogram
 tgcrypto
 configparser
-sqlalchemy
-psycopg2-binary
-rich
+asyncpg
 plate
 aiohttp
 hurry.filesize

@@ -1,7 +1,7 @@
 import json
 from pyrogram import filters, Client
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from haruka import plate, tmp_lang, httpsession, app
+from haruka import LOCAL
 from haruka.helpers import custom_filters
 from hurry.filesize import size as get_size
 from urllib.parse import quote_plus
@@ -23,14 +23,14 @@ class ETagCacheManager:
         Object constructor
         """
 
-        self.etagcache = {}
+        self.etag_cache = {}
 
     async def get(self, url):
         """
         Try to do some cache magic first so we don't download tons of data all the time
         """
-        if url not in self.etagcache:
-            data = await httpsession.get(url)
+        if url not in self.etag_cache:
+            data = await LOCAL.HTTP_SESSION.get(url)
             # github and aiohttp are gay; dumb workaround for mimetype being text/plain
             if data.content_type != "application/json":
                 response = json.loads(await data.text())
@@ -38,20 +38,20 @@ class ETagCacheManager:
                 response = await data.json()
             # if the site doesn't have an etag, just return the current data.
             if data.headers.get('etag'):
-                self.etagcache[url] = data.headers.get('etag'), response
+                self.etag_cache[url] = data.headers.get('etag'), response
         else:
             headers = {
-                "If-None-Match": self.etagcache[url][0],
+                "If-None-Match": self.etag_cache[url][0],
             }
-            data = await httpsession.get(
+            data = await LOCAL.HTTP_SESSION.get(
                 "https://raw.githubusercontent.com/Evolution-X-Devices/official_devices/master/devices.json",
                 headers=headers,
             )
             if data.status == 304:
-                response = self.etagcache[url][1]
+                response = self.etag_cache[url][1]
             else:
                 response = json.loads(await data.text())
-                self.etagcache[url] = data.headers.get('etag'), response
+                self.etag_cache[url] = data.headers.get('etag'), response
         return response
 
 
@@ -59,40 +59,38 @@ class ETagCacheManager:
 cache = ETagCacheManager()
 
 
-@Client.on_message(~filters.me & filters.command('los'))
-async def lineageos(client, message):
+@Client.on_message(~filters.me & filters.command('los') & ~LOCAL.FLOOD_WAITED)
+async def lineageos(_, message):
     cmd = message.command
     cmd.pop(0)
 
     if not cmd:
-        await message.reply(plate("android_cmd_example", tmp_lang, cmd=cmd))
+        await message.reply(LOCAL.PLATE("android_cmd_example", LOCAL.DEFAULT_LANG, cmd=cmd))
         return
-
     cmd = cmd[0]
-
     try:
         los = await cache.get(
             f'https://download.lineageos.org/api/v1/{quote_plus(cmd)}/nightly/*'
         )
         response = los['response']
         if not response:
-            await message.reply(plate("android_err_notfound", tmp_lang))
+            await message.reply(LOCAL.PLATE("android_err_notfound", LOCAL.DEFAULT_LANG))
             return
         response = response[0]
         buttons = InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(
-                        text=plate("android_button_download", tmp_lang),
+                        text=LOCAL.PLATE("android_button_download", LOCAL.DEFAULT_LANG),
                         url=response['url'],
                     )
                 ]
             ]
         )
         await message.reply(
-            plate(
+            LOCAL.PLATE(
                 "android_los_msgtxt",
-                tmp_lang,
+                LOCAL.DEFAULT_LANG,
                 filename=response['filename'],
                 url=response['url'],
                 size=get_size(int(response['size'])),
@@ -102,29 +100,26 @@ async def lineageos(client, message):
             reply_markup=buttons,
         )
     except ClientConnectionError:
-        await message.reply(plate("android_err_api", tmp_lang))
+        await message.reply(LOCAL.PLATE("android_err_api", LOCAL.DEFAULT_LANG))
 
 
-@Client.on_message(~filters.me & custom_filters.command('evo'))
-async def evolutionx(client, message):
+@Client.on_message(~filters.me & custom_filters.command('evo') & ~LOCAL.FLOOD_WAITED)
+async def evolution_x(_, message):
     cmd = message.command
     cmd.pop(0)
 
     if not cmd:
-        await message.reply(plate("android_cmd_example", tmp_lang, cmd="evo"))
+        await message.reply(LOCAL.PLATE("android_cmd_example", LOCAL.DEFAULT_LANG, cmd="evo"))
         return
-
     cmd = cmd[0]
-
     try:
         # Try to do some cache magic first so we don't download tons of data all the time
         devices = await cache.get(
             "https://raw.githubusercontent.com/Evolution-X-Devices/official_devices/master/devices.json"
         )
         if not devices:
-            await message.reply(plate("android_err_api", tmp_lang))
+            await message.reply(LOCAL.PLATE("android_err_api", LOCAL.DEFAULT_LANG))
             return
-
         for d in devices:
             if d['codename'] == cmd:
                 # find the device text so we can get the deprecated part
@@ -139,23 +134,23 @@ async def evolutionx(client, message):
                 )
                 # someone messed up the devices.json file.
                 if not evo:
-                    await message.reply(plate("android_err_notfound", tmp_lang))
+                    await message.reply(LOCAL.PLATE("android_err_notfound", LOCAL.DEFAULT_LANG))
                     return
 
                 buttons = InlineKeyboardMarkup(
                     [
                         [
                             InlineKeyboardButton(
-                                text=plate("android_button_download", tmp_lang),
+                                text=LOCAL.PLATE("android_button_download", LOCAL.DEFAULT_LANG),
                                 url=evo['url'],
                             )
                         ]
                     ]
                 )
                 await message.reply(
-                    plate(
+                    LOCAL.PLATE(
                         "android_evo_msgtxt",
-                        tmp_lang,
+                        LOCAL.DEFAULT_LANG,
                         filename=evo['filename'],
                         url=evo['url'],
                         size=get_size(int(evo['size'])),
@@ -169,18 +164,18 @@ async def evolutionx(client, message):
                 )
                 return  # Return early to skip the not found message
 
-        await message.reply(plate("android_err_notfound", tmp_lang))
+        await message.reply(LOCAL.PLATE("android_err_notfound", LOCAL.DEFAULT_LANG))
     except ClientConnectionError:
-        await message.reply(plate("android_err_api", tmp_lang))
+        await message.reply(LOCAL.PLATE("android_err_api", LOCAL.DEFAULT_LANG))
 
 
-@Client.on_message(~filters.me & custom_filters.command('phh'))
-async def phhusson(client, message):
+@Client.on_message(~filters.me & custom_filters.command('phh') & ~LOCAL.FLOOD_WAITED)
+async def phhusson(_, message):
     try:
         data = await cache.get(
             "https://api.github.com/repos/phhusson/treble_experimentations/releases/latest"
         )
-        reply_text = plate("android_phh_msgtxt", tmp_lang)
+        reply_text = LOCAL.PLATE("android_phh_msgtxt", LOCAL.DEFAULT_LANG)
         for i in range(len(data)):
             try:
                 name = data['assets'][i]['name']
@@ -190,46 +185,41 @@ async def phhusson(client, message):
                 continue
         await message.reply(reply_text)
     except ClientConnectionError:
-        await message.reply(plate("android_err_api", tmp_lang))
+        await message.reply(LOCAL.PLATE("android_err_api", LOCAL.DEFAULT_LANG))
 
 
-@Client.on_message(~filters.me & custom_filters.command('bootleggers'))
-async def bootleggers(client, message):
+@Client.on_message(~filters.me & custom_filters.command('bootleggers') & ~LOCAL.FLOOD_WAITED)
+async def bootleggers(_, message):
     cmd = message.command
     cmd.pop(0)
-
     if not cmd:
-        await message.reply(plate("android_cmd_example", tmp_lang, cmd="bootleggers"))
+        await message.reply(LOCAL.PLATE("android_cmd_example", LOCAL.DEFAULT_LANG, cmd="bootleggers"))
         return
-
     cmd = cmd[0]
-
     # hotfix for some devices that have uppercase codenames
     if cmd.lower() in ["rmx1971", "x00t", "x01bd", "z01r", "rmx206x"]:
         cmd = cmd.upper()
-
     try:
         data = await cache.get("http://downloads.bootleggersrom.xyz/api/devices.json")
         for codename, info in data.items():
             if cmd == codename:
                 xda = ""
                 if info['xdathread']:
-                    xda = plate("android_bootleg_xda", tmp_lang, url=info['xdathread'])
-
+                    xda = LOCAL.PLATE("android_bootleg_xda", LOCAL.DEFAULT_LANG, url=info['xdathread'])
                 buttons = InlineKeyboardMarkup(
                     [
                         [
                             InlineKeyboardButton(
-                                text=plate("android_button_download", tmp_lang),
+                                text=LOCAL.PLATE("android_button_download", LOCAL.DEFAULT_LANG),
                                 url=info['download'],
                             )
                         ]
                     ]
                 )
                 await message.reply(
-                    plate(
+                    LOCAL.PLATE(
                         "android_bootleg_msgtxt",
-                        tmp_lang,
+                        LOCAL.DEFAULT_LANG,
                         name=info['fullname'],
                         maintainer=info['maintainer'],
                         date=info['buildate'],
@@ -243,14 +233,13 @@ async def bootleggers(client, message):
                     reply_markup=buttons,
                 )
                 return
-
-        await message.reply(plate("android_err_notfound", tmp_lang))
+        await message.reply(LOCAL.PLATE("android_err_notfound", LOCAL.DEFAULT_LANG))
     except ClientConnectionError:
-        await message.reply(plate("android_err_api", tmp_lang))
+        await message.reply(LOCAL.PLATE("android_err_api", LOCAL.DEFAULT_LANG))
 
 
-@Client.on_message(~filters.me & custom_filters.command('magisk'))
-async def magisk(client, message):
+@Client.on_message(~filters.me & custom_filters.command('magisk') & ~LOCAL.FLOOD_WAITED)
+async def magisk(_, message):
     url = 'https://raw.githubusercontent.com/topjohnwu/magisk_files/'
     try:
         stable, beta, canary = await asyncio.gather(
@@ -259,16 +248,15 @@ async def magisk(client, message):
             cache.get(url + "canary/canary.json"),
         )
         if not stable and not beta and not canary:
-            await message.reply(plate("android_err_api", tmp_lang))
+            await message.reply(LOCAL.PLATE("android_err_api", LOCAL.DEFAULT_LANG))
             return
-
         await message.reply(
-            plate(
+            LOCAL.PLATE(
                 "android_magisk_msgtxt",
-                tmp_lang,
+                LOCAL.DEFAULT_LANG,
                 # Generics
-                uninstalltxt=plate("android_magisk_uninstaller", tmp_lang),
-                changelogtxt=plate("android_magisk_changelog", tmp_lang),
+                uninstalltxt=LOCAL.PLATE("android_magisk_uninstaller", LOCAL.DEFAULT_LANG),
+                changelogtxt=LOCAL.PLATE("android_magisk_changelog", LOCAL.DEFAULT_LANG),
                 # Stable text
                 stablezip="ZIP v" + stable['magisk']['version'],
                 stablezipurl=stable['magisk']['link'],
@@ -293,6 +281,5 @@ async def magisk(client, message):
             ),
             disable_web_page_preview=True,
         )
-
     except ClientConnectionError:
-        await message.reply(plate("android_err_api", tmp_lang))
+        await message.reply(LOCAL.PLATE("android_err_api", LOCAL.DEFAULT_LANG))

@@ -1,30 +1,48 @@
 import logging
-import aiohttp
 import asyncio
-from pyrogram import Client, __version__, idle
+import threading
+from haruka import LOCAL, set_bot
 from pyrogram.session import Session
-from haruka import httpsession, get_bot, app, LOGGER, FORMAT
+from pyrogram import __version__, idle
+from haruka.database import init_database
+from haruka.database.util import ensure_bot_in_db
+from haruka.modules.antifloodwait import background_watcher
 
 
-async def run_async(client: Client, session: aiohttp.ClientSession):
+async def run_async():
     """
     Asynchronous entry point for HarukaPyro
     """
 
     try:
-        await client.start()
-        LOGGER.info("HarukaPyro started")
-        await get_bot()
+        LOCAL.LOGGER.info("Starting the Telegram client")
+        await LOCAL.APP.start()
+        LOCAL.LOGGER.debug("Telegram client started")
+        LOCAL.LOGGER.info("Retrieving information about ourselves")
+        await set_bot()
+        LOCAL.LOGGER.debug(f"Retrieved self: ID is {LOCAL.bot_id}, username is @{LOCAL.bot_username}")
+        LOCAL.LOGGER.info("Initializing database")
+        LOCAL.database_pool = await init_database(*LOCAL.DB_POOL_SIZE)
+        LOCAL.LOGGER.debug(f"Initialized database pool: min={LOCAL.DB_POOL_SIZE[0]} and max={LOCAL.DB_POOL_SIZE[1]}")
+        LOCAL.LOGGER.debug("Ensuring that we're in the database")
+        await ensure_bot_in_db()
+        LOCAL.LOGGER.info("Starting antiflood background watcher")
+        threading.Thread(target=background_watcher,
+                         args=(LOCAL.PURGE_POLLING_RATE, LOCAL.INACTIVE_THRESHOLD),
+                         daemon=True).start()
+        LOCAL.LOGGER.debug("Initialization complete")
+        LOCAL.LOGGER.info("HarukaPyro started, going idle")
         await idle()
     except BaseException as error:
-        LOGGER.error(f"Exiting due to a {type(error).__name__}: {error}")
+        LOCAL.LOGGER.error(f"Exiting due to a {type(error).__name__}: {error}")
     finally:
-        await session.close()
+        LOCAL.LOGGER.warning("HarukaPyro is shutting down")
+        await LOCAL.HTTP_SESSION.close()
+        await LOCAL.database_pool.close()
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format=FORMAT, datefmt="%d/%m/%Y %T")
-    LOGGER.info(
+    LOCAL.LOGGER.info(
         f"""Starting HarukaPyro, powered by Pyrogram (v{__version__}). Copyright (C) 2021 Intellivoid Technologies
     This program comes with ABSOLUTELY NO WARRANTY.
     This is free software, and you are welcome to redistribute it
@@ -32,11 +50,10 @@ if __name__ == "__main__":
     Haruka Aya is a registered trademark owned by Haruka LLC and licensed to Intellivoid Technologies.
     All rights and trademarks belong to their respective owners."""
     )
+    LOCAL.LOGGER.debug("Initializing HarukaPyro")
     # Sets pyrogram logging to warning because info is too verbose
+    LOCAL.LOGGER.debug("Setting pyrogram logs to warning to avoid verbose output and disabling the session notice")
     logging.getLogger("pyrogram").setLevel(logging.WARNING)
     Session.notice_displayed = True
-    try:
-        asyncio.run(run_async(app, httpsession))
-    except AttributeError:
-        # Python < 3.6
-        asyncio.get_event_loop().run_until_complete(run_async(app, httpsession))
+    LOCAL.LOGGER.debug("Starting asyncio event loop")
+    asyncio.run(run_async())
