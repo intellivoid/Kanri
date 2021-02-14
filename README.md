@@ -52,3 +52,10 @@ being worked on to release to production.
  - You must sign off on your commit.
  - You must sign the commit via GPG Key.
  - Make sure your PR passes all CI.
+ 
+ -------------------------------------------------------------------------------------
+ 
+ ## Notice
+ 
+ This project was created by Intellivoid Technologies and has no realtion whatsoever
+ with HarukaAya or Haruka LLC.
