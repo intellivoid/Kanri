@@ -1,8 +1,8 @@
 import json
 from pyrogram import filters, Client
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from haruka import LOCAL
-from haruka.helpers import custom_filters
+from kanri import LOCAL
+from kanri.helpers import custom_filters
 from hurry.filesize import size as get_size
 from urllib.parse import quote_plus
 from aiohttp import ClientConnectionError

@@ -1,5 +1,5 @@
-from haruka import LOCAL
-from haruka.database.users import get_user, insert_user
+from kanri import LOCAL
+from kanri.database.users import get_user, insert_user
 
 
 async def ensure_bot_in_db():

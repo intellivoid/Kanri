@@ -1,5 +1,5 @@
 import asyncpg
-from haruka import LOCAL
+from kanri import LOCAL
 from dataclasses import dataclass, field
 from asyncpg.exceptions import PostgresError
 from typing import Optional, Union, Dict, Iterable

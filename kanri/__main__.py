@@ -1,17 +1,17 @@
 import logging
 import asyncio
 import threading
-from haruka import LOCAL, set_bot
+from kanri import LOCAL, set_bot
 from pyrogram.session import Session
 from pyrogram import __version__, idle
-from haruka.database import init_database
-from haruka.database.util import ensure_bot_in_db
-from haruka.modules.antifloodwait import background_watcher
+from kanri.database import init_database
+from kanri.database.util import ensure_bot_in_db
+from kanri.modules.antifloodwait import background_watcher
 
 
 async def run_async():
     """
-    Asynchronous entry point for HarukaPyro
+    Asynchronous entry point for Kanri
     """
 
     try:
@@ -31,26 +31,24 @@ async def run_async():
                          args=(LOCAL.PURGE_POLLING_RATE, LOCAL.INACTIVE_THRESHOLD),
                          daemon=True).start()
         LOCAL.LOGGER.debug("Initialization complete")
-        LOCAL.LOGGER.info("HarukaPyro started, going idle")
+        LOCAL.LOGGER.info("Kanri started, going idle")
         await idle()
     except BaseException as error:
         LOCAL.LOGGER.error(f"Exiting due to a {type(error).__name__}: {error}")
     finally:
-        LOCAL.LOGGER.warning("HarukaPyro is shutting down")
+        LOCAL.LOGGER.warning("Kanri is shutting down")
         await LOCAL.HTTP_SESSION.close()
         await LOCAL.database_pool.close()
 
 
 if __name__ == "__main__":
     LOCAL.LOGGER.info(
-        f"""Starting HarukaPyro, powered by Pyrogram (v{__version__}). Copyright (C) 2021 Intellivoid Technologies
+        f"""Starting Kanri, powered by Pyrogram (v{__version__}). Copyright (C) 2021 Intellivoid Technologies
     This program comes with ABSOLUTELY NO WARRANTY.
     This is free software, and you are welcome to redistribute it
-    under certain conditions, check the LICENSE file for more information.
-    Haruka Aya is a registered trademark owned by Haruka LLC and licensed to Intellivoid Technologies.
-    All rights and trademarks belong to their respective owners."""
+    under certain conditions, check the LICENSE file for more information."""
     )
-    LOCAL.LOGGER.debug("Initializing HarukaPyro")
+    LOCAL.LOGGER.debug("Initializing Kanri")
     # Sets pyrogram logging to warning because info is too verbose
     LOCAL.LOGGER.debug("Setting pyrogram logs to warning to avoid verbose output and disabling the session notice")
     logging.getLogger("pyrogram").setLevel(logging.WARNING)

@@ -35,7 +35,7 @@ LOCAL.DB_POOL_SIZE = (database_config.getint("min_pool_size"), database_config.g
 logging.basicConfig(
                     format=logging_config.get("format"),
                     datefmt=logging_config.get("date_format"))
-LOCAL.LOGGER = logging.getLogger("harukapyro")
+LOCAL.LOGGER = logging.getLogger("Kanri")
 LOCAL.LOGGER.setLevel(logging_config.getint("level"))
 LOCAL.PLATE = Plate()
 LOCAL.HTTP_SESSION = aiohttp.ClientSession()

@@ -1,7 +1,7 @@
-from haruka import LOCAL
-from haruka.database import users as chats_db
+from kanri import LOCAL
+from kanri.database import users as chats_db
 from pyrogram import filters, Client
-from haruka.helpers import custom_filters
+from kanri.helpers import custom_filters
 from io import BytesIO
 
 

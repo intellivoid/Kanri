@@ -1,14 +1,14 @@
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from haruka import LOCAL
-from haruka.helpers import custom_filters
+from kanri import LOCAL
+from kanri.helpers import custom_filters
 
 # Start buttons
 BUTTONS = [
     [
         InlineKeyboardButton(
             LOCAL.PLATE("help_button_support", LOCAL.DEFAULT_LANG),
-            url="https://t.me/HarukaAyaGroup",
+            url="https://t.me/KanriGroup",
         ),
         InlineKeyboardButton(
             LOCAL.PLATE("help_button_help", LOCAL.DEFAULT_LANG), callback_data='help_back'

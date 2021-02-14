@@ -4,7 +4,7 @@ from typing import List
 from pyrogram.filters import create
 from pyrogram.types import Message
 from pyrogram import Client
-from haruka import LOCAL
+from kanri import LOCAL
 
 
 def command(

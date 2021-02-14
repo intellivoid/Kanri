@@ -1,16 +1,12 @@
-# HarukaPyro
+# Kanri
 
-![](https://raw.githubusercontent.com/intellivoid/HarukaAya/master/images/haruka_banner.png)
-
-HarukaPyro is a Pyrogram-based, modal, performant and scalable Telegram group management bot software. 
-
-Planned to be used on [Haruka Aya(TM)](https://t.me/HarukaAyaBot) as an Intellivoid product.
+Kanri is a Pyrogram-based, modal, performant and scalable Telegram group management bot software. 
 
 `Copyright (C) 2020-2021 Intellivoid Technologies.`
  
 ## Useful links
-  - [Haruka Aya Support](https://t.me/HarukaAyaGroup)
-  - [Haruka Aya's News](https://t.me/HarukaAya)
+  - [Kanri Support](https://t.me/KanriGroup)
+  - [Kanri Update Channel](https://t.me/KanriUpdates)
   - [Intellivoid](https://t.me/Intellivoid)
   - [Intellivoid Discussions](https://t.me/IntellivoidDiscussions)
   - [Intellivoid Community](https://t.me/IntellivoidCommunity)
@@ -35,11 +31,11 @@ before participating in them.
 
 ## Branch purposes
 
-HarukaPyro will have multiple branches for different purposes, these are the
+Kanri will have multiple branches for different purposes, these are the
 main branches you should understand before contributing to this project.
 
  - `production` This is the production branch that the server will listen to and
-    will use to deploy HarukaPyro in production. This is the most stable branch, and it's
+    will use to deploy Kanri in production. This is the most stable branch, and it's
     ready for production. **We do not push experimental or patches to this branch
     until we can confirm that it's stable for production**
  
@@ -56,11 +52,3 @@ being worked on to release to production.
  - You must sign off on your commit.
  - You must sign the commit via GPG Key.
  - Make sure your PR passes all CI.
- 
- 
- ## Notices
- 
-"Haruka Aya" is a trademark owned by Haruka LLC, acquired and currently maintained by Intellivoid Technologies.
-HarukaPyro is owned and maintained by Intellivoid Technologies.
-
-All rights and trademarks belong to their respective owners.

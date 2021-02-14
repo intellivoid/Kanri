@@ -1,6 +1,6 @@
 import time
 import logging
-from haruka import LOCAL
+from kanri import LOCAL
 from itertools import tee
 from pyrogram import Client
 from pyrogram.types import Message

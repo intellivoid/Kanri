@@ -2,8 +2,8 @@ from datetime import datetime
 from pyrogram import filters, Client
 from pyrogram.types import User, Message
 from pyrogram.errors import PeerIdInvalid
-from haruka import LOCAL
-from haruka.helpers import custom_filters
+from kanri import LOCAL
+from kanri.helpers import custom_filters
 
 __mod_name__ = "Info"
 __help__ = "info_help"

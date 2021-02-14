@@ -1,7 +1,7 @@
 from typing import Union
 from asyncpg.exceptions import PostgresError
-from haruka.database import run_query, ChatMember
-from haruka.database.chats import get_chat
+from kanri.database import run_query, ChatMember
+from kanri.database.chats import get_chat
 
 
 async def insert_chat_member(chat_id: int, user_id: int):

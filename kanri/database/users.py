@@ -1,8 +1,8 @@
 from typing import Optional, Union, List
 from asyncpg.exceptions import PostgresError
-from haruka.database.chats import get_chat, insert_chat
-from haruka.database import User, ChatMember, Chat, run_query
-from haruka.database.chat_member import get_chat_member, insert_chat_member
+from kanri.database.chats import get_chat, insert_chat
+from kanri.database import User, ChatMember, Chat, run_query
+from kanri.database.chat_member import get_chat_member, insert_chat_member
 
 
 async def get_user(by: str, term: Union[str, int]) -> Union[User, type(None), PostgresError]:

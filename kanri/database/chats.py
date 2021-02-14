@@ -1,6 +1,6 @@
 from typing import Union
 from asyncpg.exceptions import PostgresError
-from haruka.database import Chat, run_query
+from kanri.database import Chat, run_query
 
 
 async def get_chat(chat_id: int) -> Union[type(None), Chat, PostgresError]:

@@ -1,9 +1,9 @@
 import re
-from haruka import HELPABLE, LOCAL  # pylint: disable-msg=E0611
+from kanri import HELPABLE, LOCAL  # pylint: disable-msg=E0611
 from pyrogram import filters, Client
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from haruka.helpers import custom_filters
-from haruka.helpers.misc import paginate_modules
+from kanri.helpers import custom_filters
+from kanri.helpers.misc import paginate_modules
 
 
 async def help_parser(client, chat_id, text, keyboard=None):
